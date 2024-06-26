@@ -50,6 +50,7 @@ export const DEBUG_INPUT_TYPES = [
   'documentActionsTest',
   'documentWithHoistedPt',
   'empty',
+  'error',
   'fieldActionsTest',
   'fieldComponentsTest',
   'fieldsetsTest',

@@ -4,7 +4,7 @@ import {type UserViteConfig} from '@sanity/cli'
 import viteReact from '@vitejs/plugin-react'
 import debug from 'debug'
 import readPkgUp from 'read-pkg-up'
-import {type ConfigEnv, type InlineConfig, mergeConfig} from 'vite'
+import {type ConfigEnv, type InlineConfig} from 'vite'
 
 import {getAliases} from './aliases'
 import {createExternalFromImportMap} from './createExternalFromImportMap'
@@ -161,7 +161,7 @@ export async function getViteConfig(options: ViteOptions): Promise<InlineConfig>
  * @returns Merged configuration
  * @internal
  */
-export function finalizeViteConfig(config: InlineConfig): InlineConfig {
+export async function finalizeViteConfig(config: InlineConfig): Promise<InlineConfig> {
   if (typeof config.build?.rollupOptions?.input !== 'object') {
     throw new Error(
       'Vite config must contain `build.rollupOptions.input`, and it must be an object',
@@ -174,6 +174,7 @@ export function finalizeViteConfig(config: InlineConfig): InlineConfig {
     )
   }
 
+  const {mergeConfig} = await import('vite')
   return mergeConfig(config, {
     build: {
       rollupOptions: {
@@ -205,6 +206,7 @@ export async function extendViteConfigWithUserConfig(
     config = await userConfig(config, env)
   } else if (typeof userConfig === 'object') {
     debug('Merging vite config using user-specified object')
+    const {mergeConfig} = await import('vite')
     config = mergeConfig(config, userConfig)
   }
 

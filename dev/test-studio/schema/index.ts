@@ -24,7 +24,6 @@ import {
 } from './debug/deprecatedFields'
 import documentActions from './debug/documentActions'
 import empty from './debug/empty'
-import error from './debug/error'
 import experiment from './debug/experiment'
 import {fieldActionsTest} from './debug/fieldActionsTest'
 import fieldComponentsTest from './debug/fieldComponentsTest'
@@ -197,7 +196,6 @@ export const schemaTypes = [
   deprecatedFields,
   documentActions,
   empty,
-  error,
   experiment,
   fieldActionsTest,
   fieldComponentsTest,

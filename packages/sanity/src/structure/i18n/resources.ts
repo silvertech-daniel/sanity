@@ -373,7 +373,8 @@ const structureLocaleStrings = defineLocalesResources('structure', {
   /** The document title shown when document title is "undefined" in operation message */
   'panes.document-operation-results.operation-undefined-title': 'Untitled',
   /** The title of the reconnecting toast */
-  'panes.document-pane-provider.reconnecting.title': 'Connection lost. Attempting to reconnect…',
+  'panes.document-pane-provider.reconnecting.title':
+    'Connection lost. Check your internet connection.',
   /** The loading message for the document not found pane */
   'panes.document-pane.document-not-found.loading': 'Loading document…',
   /** The text of the document not found pane if the schema is known */

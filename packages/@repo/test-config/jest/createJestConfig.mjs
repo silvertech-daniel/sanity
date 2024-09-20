@@ -42,7 +42,6 @@ export function createJestConfig(config = {}) {
     moduleNameMapper = {},
     modulePathIgnorePatterns = [],
     transform = {},
-    displayName,
     ...restOfInputConfig
   } = config
 

@@ -61,6 +61,7 @@
     "p-map": "^7.0.1"
   },
   "devDependencies": {
+    "@repo/dev-aliases": "workspace:*",
     "@repo/package.config": "workspace:*",
     "@types/arrify": "^2.0.1",
     "@types/debug": "^4.1.12",

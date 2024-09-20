@@ -1080,6 +1080,9 @@ importers:
         specifier: ^7.0.1
         version: 7.0.2
     devDependencies:
+      '@repo/dev-aliases':
+        specifier: workspace:*
+        version: link:../../@repo/dev-aliases
       '@repo/package.config':
         specifier: workspace:*
         version: link:../../@repo/package.config

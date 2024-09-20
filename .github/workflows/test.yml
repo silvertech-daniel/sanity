@@ -73,11 +73,9 @@ jobs:
         run: |
           node -v
           pnpm test:vitest
-        env:
-          GITHUB_SHARD_IDENTIFIER: ${{ matrix.shardIndex }}-${{ matrix.shardTotal }}
 
       - name: Test using Jest (legacy)
-        id: test
+        id: test-jest
         run: |
           node -v
           pnpm test:jest --silent --shard=${{ matrix.shardIndex}}/${{ matrix.shardTotal }} --ignoreProjects=@sanity/cli

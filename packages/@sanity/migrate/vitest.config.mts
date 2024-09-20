@@ -1,4 +1,4 @@
-import {getViteAliases} from '@repo/dev-aliases'
+import {getViteAliases} from '@repo/dev-aliases/vitest'
 import {configDefaults, defineConfig} from 'vitest/config'
 
 export default defineConfig({

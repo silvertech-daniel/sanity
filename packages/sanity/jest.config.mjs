@@ -1,7 +1,7 @@
 import path from 'node:path'
-import {createJestConfig, readPackageName, resolveDirNameFromUrl} from '../../test/config.mjs'
+import {createJestConfig, readPackageName, resolveDirName} from '@repo/test-config/jest'
 
-const cliPath = path.resolve(resolveDirNameFromUrl(import.meta.url), './src/_internal/cli')
+const cliPath = path.resolve(resolveDirName(import.meta.url), './src/_internal/cli')
 
 export default createJestConfig({
   displayName: readPackageName(import.meta.url),

@@ -33,9 +33,6 @@ importers:
       '@google-cloud/storage':
         specifier: ^7.11.0
         version: 7.13.0(encoding@0.1.13)
-      '@jest/globals':
-        specifier: ^29.7.0
-        version: 29.7.0
       '@playwright/test':
         specifier: 1.44.1
         version: 1.44.1
@@ -45,6 +42,9 @@ importers:
       '@repo/package.config':
         specifier: workspace:*
         version: link:packages/@repo/package.config
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:packages/@repo/test-config
       '@repo/tsconfig':
         specifier: workspace:*
         version: link:packages/@repo/tsconfig
@@ -186,9 +186,6 @@ importers:
       jest:
         specifier: ^29.7.0
         version: 29.7.0(@types/node@18.19.50)(babel-plugin-macros@3.1.0)(node-notifier@10.0.1)(ts-node@10.9.2(@swc/core@1.7.26(@swc/helpers@0.5.11))(@types/node@18.19.50)(typescript@5.6.2))
-      jest-environment-jsdom:
-        specifier: ^29.7.0
-        version: 29.7.0
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -659,6 +656,21 @@ importers:
 
   packages/@repo/package.config: {}
 
+  packages/@repo/test-config:
+    devDependencies:
+      '@jest/globals':
+        specifier: ^29.7.0
+        version: 29.7.0
+      '@repo/dev-aliases':
+        specifier: workspace:*
+        version: link:../dev-aliases
+      dotenv:
+        specifier: ^16.4.5
+        version: 16.4.5
+      jest-environment-jsdom:
+        specifier: ^29.7.0
+        version: 29.7.0
+
   packages/@repo/test-exports:
     dependencies:
       '@sanity/block-tools':
@@ -1123,6 +1135,9 @@ importers:
       '@repo/package.config':
         specifier: workspace:*
         version: link:../../@repo/package.config
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:../../@repo/test-config
       '@types/debug':
         specifier: ^4.1.5
         version: 4.1.12
@@ -1731,6 +1746,9 @@ importers:
       '@repo/package.config':
         specifier: workspace:*
         version: link:../@repo/package.config
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:../@repo/test-config
       '@sanity/codegen':
         specifier: 3.57.4
         version: link:../@sanity/codegen

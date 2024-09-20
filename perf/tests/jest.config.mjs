@@ -1,4 +1,4 @@
-import {createJestConfig} from '../../test/config.mjs'
+import {createJestConfig, readPackageName, resolveDirName} from '@repo/test-config/jest'
 
 export default createJestConfig({
   // ignore performance tests

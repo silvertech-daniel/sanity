@@ -1,5 +1,8 @@
 /* eslint-disable tsdoc/syntax */
 
+// NOTE: THIS FILE NEEDS TO REMAIN COMMONJS
+// It can be converted to ESM/TS when we either not use jest anymore, or node/jest runner natively supports ESM (including with import.meta etc).
+
 /**
  * The path mappings/aliases used by various tools in the monorepo to map imported modules to
  * source files in order to speed up rebuilding and avoid having a separate watcher process to build

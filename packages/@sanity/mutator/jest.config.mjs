@@ -1,6 +1,2 @@
-import {createJestConfig, readPackageName} from '../../../test/config.mjs'
-import fs from 'node:fs'
-import path from 'node:path'
-export default createJestConfig({
-  displayName: readPackageName(import.meta.url),
-})
+import {createJestConfig} from '@repo/test-config/jest'
+export default createJestConfig(import.meta)

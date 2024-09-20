@@ -1,4 +1,4 @@
-import {createJestConfig} from '../../../../../test/config.mjs'
+import {createJestConfig} from '@repo/test-config/jest'
 
 export default createJestConfig({
   displayName: 'sanity/cli',

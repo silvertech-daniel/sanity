@@ -4,23 +4,15 @@ import devAliases from '@repo/dev-aliases'
 
 import path from 'node:path'
 import {escapeRegExp, omit} from 'lodash-es'
-import {getDirname} from './importMetaPonyFill.mjs'
-import fs from 'node:fs'
+import {resolveDirName} from './resolveDirName.mjs'
 
-const dirname = getDirname(import.meta.url)
+const dirname = resolveDirName(import.meta.url)
 
-export function resolveDirNameFromUrl(url) {
-  return getDirname(url)
-}
-export function readPackageName(dirNameUrl) {
-  return JSON.parse(fs.readFileSync(path.join(getDirname(dirNameUrl), 'package.json'), 'utf-8'))
-    .name
-}
 /** Regex for matching file extensions. */
 const RE_EXT = /\.[0-9a-z]+$/i
 
 /** Path to the root of the Sanity monorepo. */
-const ROOT_PATH = path.resolve(dirname, '..')
+const ROOT_PATH = path.resolve(dirname, '..', '..', '..', '..')
 
 const jestAliases = Object.fromEntries(
   Object.entries(devAliases).map(([packageName, aliasPath]) => [
@@ -50,6 +42,7 @@ export function createJestConfig(config = {}) {
     moduleNameMapper = {},
     modulePathIgnorePatterns = [],
     transform = {},
+    displayName,
     ...restOfInputConfig
   } = config
 

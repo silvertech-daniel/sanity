@@ -3,10 +3,10 @@
   "version": "3.57.4",
   "private": true,
   "description": "Dev aliases for the sanity monorepo",
+  "type": "module",
   "exports": {
     ".": "./dev-aliases.cjs",
-    "./vitest": "./vitest.cjs",
-    "./package.json": "./package.json"
+    "./vitest": "./vitest.mjs"
   },
   "main": "./dev-aliases.cjs"
 }

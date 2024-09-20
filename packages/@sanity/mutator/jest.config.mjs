@@ -1,2 +1,4 @@
-import {createJestConfig} from '@repo/test-config/jest'
-export default createJestConfig(import.meta)
+import {createJestConfig, readPackageName} from '@repo/test-config/jest'
+export default createJestConfig({
+  displayName: readPackageName(import.meta.url),
+})

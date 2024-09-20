@@ -77,12 +77,6 @@ await exec({
 })
 const sanityPackagePath = path.join(tmpDir, 'node_modules', 'sanity')
 
-await exec({
-  text: ['Ensuring playwright is installed…', 'Playwright is installed'],
-  command: 'npx playwright install --with-deps',
-  spinner,
-})
-
 const table = new Table({
   head: [
     chalk.bold('benchmark'),
@@ -107,8 +101,9 @@ const formatFps = (fps: number) => {
 const formatPercentage = (value: number): string => {
   const rounded = value.toFixed(1)
   const sign = value >= 0 ? '+' : ''
-  if (value >= 0) return chalk.green(`${sign}${rounded}%`)
-  return chalk.red(`${rounded}%`)
+  const emoji = value >= 0 ? '🟢' : '🔴'
+  if (value >= 0) return chalk.green(`${sign}${rounded}% ${emoji}`)
+  return chalk.red(`${rounded}% ${emoji}`)
 }
 
 // For markdown formatting without colors
@@ -120,7 +115,8 @@ const formatFpsPlain = (fps: number) => {
 const formatPercentagePlain = (value: number): string => {
   const rounded = value.toFixed(1)
   const sign = value >= 0 ? '+' : ''
-  return `${sign}${rounded}%`
+  const emoji = value >= 0 ? '🟢' : '🔴'
+  return `${sign}${rounded}% ${emoji}`
 }
 
 // Initialize the regression flag

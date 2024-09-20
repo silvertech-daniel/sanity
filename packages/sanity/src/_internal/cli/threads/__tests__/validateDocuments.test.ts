@@ -1,4 +1,5 @@
 import {createServer, type Server} from 'node:http'
+import path from 'node:path'
 import {Worker} from 'node:worker_threads'
 
 import {afterAll, beforeAll, describe, expect, it, jest} from '@jest/globals'
@@ -203,7 +204,7 @@ describe('validateDocuments', () => {
         const moduleAlias = require('module-alias')
         const { register } = require('esbuild-register/dist/node')
 
-        moduleAlias.addAliases(${JSON.stringify(getMonorepoAliases())})
+        moduleAlias.addAliases(${JSON.stringify(getMonorepoAliases(path.resolve(__dirname, '../../../../../../..')))})
 
         const { unregister } = register({
           target: 'node18',

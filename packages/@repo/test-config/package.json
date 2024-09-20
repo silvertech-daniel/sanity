@@ -12,6 +12,7 @@
     "@jest/globals": "^29.7.0",
     "@repo/dev-aliases": "workspace:*",
     "dotenv": "^16.4.5",
-    "jest-environment-jsdom": "^29.7.0"
+    "jest-environment-jsdom": "^29.7.0",
+    "lodash-es": "^4.17.21"
   }
 }

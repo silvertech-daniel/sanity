@@ -81,9 +81,9 @@ importers:
       '@types/glob':
         specifier: ^7.2.0
         version: 7.2.0
-      '@types/lodash-es':
+      '@types/lodash':
         specifier: ^4.17.7
-        version: 4.17.12
+        version: 4.17.7
       '@types/node':
         specifier: ^18.19.8
         version: 18.19.50
@@ -195,7 +195,7 @@ importers:
       lint-staged:
         specifier: ^12.1.2
         version: 12.5.0(enquirer@2.3.6)
-      lodash-es:
+      lodash:
         specifier: ^4.17.21
         version: 4.17.21
       minimist:
@@ -670,6 +670,9 @@ importers:
       jest-environment-jsdom:
         specifier: ^29.7.0
         version: 29.7.0
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
 
   packages/@repo/test-exports:
     dependencies:
@@ -740,6 +743,9 @@ importers:
       '@repo/package.config':
         specifier: workspace:*
         version: link:../../@repo/package.config
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:../../@repo/test-config
       '@sanity/schema':
         specifier: 3.57.4
         version: link:../schema
@@ -819,6 +825,9 @@ importers:
       '@repo/package.config':
         specifier: workspace:*
         version: link:../../@repo/package.config
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:../../@repo/test-config
       '@rexxars/gitconfiglocal':
         specifier: ^3.0.1
         version: 3.0.1
@@ -1030,6 +1039,9 @@ importers:
       '@repo/package.config':
         specifier: workspace:*
         version: link:../../@repo/package.config
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:../../@repo/test-config
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
@@ -1181,6 +1193,9 @@ importers:
       '@repo/package.config':
         specifier: workspace:*
         version: link:../../@repo/package.config
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:../../@repo/test-config
       '@sanity/icons':
         specifier: ^3.4.0
         version: 3.4.0(react@19.0.0-rc-f994737d14-20240522)
@@ -1215,6 +1230,9 @@ importers:
       '@repo/package.config':
         specifier: workspace:*
         version: link:../../@repo/package.config
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:../../@repo/test-config
       '@sanity/insert-menu':
         specifier: 1.0.9
         version: 1.0.9(@sanity/types@packages+@sanity+types)(react-dom@19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522))(react-is@19.0.0-rc-a7d1240c-20240731)(react@19.0.0-rc-f994737d14-20240522)(styled-components@6.1.13(react-dom@19.0.0-rc-f994737d14-20240522(react@19.0.0-rc-f994737d14-20240522))(react@19.0.0-rc-f994737d14-20240522))
@@ -1246,6 +1264,9 @@ importers:
       '@repo/package.config':
         specifier: workspace:*
         version: link:../../@repo/package.config
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:../../@repo/test-config
       '@types/moment':
         specifier: ^2.13.0
         version: 2.13.0
@@ -1996,6 +2017,9 @@ importers:
       '@jest/globals':
         specifier: ^29.7.0
         version: 29.7.0
+      '@repo/test-config':
+        specifier: workspace:*
+        version: link:../../packages/@repo/test-config
       '@types/lodash':
         specifier: ^4.17.7
         version: 4.17.7

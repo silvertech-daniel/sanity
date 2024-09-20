@@ -75,6 +75,7 @@
   "devDependencies": {
     "@jest/globals": "^29.7.0",
     "@repo/package.config": "workspace:*",
+    "@repo/test-config": "workspace:*",
     "@sanity/icons": "^3.4.0",
     "@types/arrify": "^1.0.4",
     "@types/lodash": "^4.17.7",

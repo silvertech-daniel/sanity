@@ -1,7 +1,7 @@
 import {type AliasOptions} from 'vite'
 
 import {getSanityBrowserAliases} from './getBrowserAliases'
-import {getMonorepoAliases} from './getMonorepoAliases'
+import {getMonorepoAliases, resolveSanityMonorepoPath} from './getMonorepoAliases'
 
 /**
  * @internal
@@ -25,5 +25,6 @@ export interface GetAliasesOptions {
  * @internal
  */
 export async function getAliases({sanityPkgPath}: GetAliasesOptions): Promise<AliasOptions> {
-  return (await getMonorepoAliases()) || getSanityBrowserAliases(sanityPkgPath)
+  const monorepoPath = await resolveSanityMonorepoPath(__dirname)
+  return monorepoPath ? getMonorepoAliases(monorepoPath) : getSanityBrowserAliases(sanityPkgPath)
 }

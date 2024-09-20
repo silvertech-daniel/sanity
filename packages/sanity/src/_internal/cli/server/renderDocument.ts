@@ -43,6 +43,7 @@ interface DocumentProps {
 }
 
 interface RenderDocumentOptions {
+  monorepoPath?: string
   studioRootPath: string
   props?: DocumentProps
   importMap?: {
@@ -150,7 +151,7 @@ function renderDocumentFromWorkerData() {
     throw new Error('Must be used as a Worker with a valid options object in worker data')
   }
 
-  const {studioRootPath, props, importMap}: RenderDocumentOptions = workerData || {}
+  const {studioRootPath, props, importMap, monorepoPath}: RenderDocumentOptions = workerData || {}
 
   if (workerData?.dev) {
     // Define `__DEV__` in the worker thread as well
@@ -171,7 +172,9 @@ function renderDocumentFromWorkerData() {
   // Require hook #1
   // Alias monorepo modules
   debug('Registering potential aliases')
-  require('module-alias').addAliases(getMonorepoAliases())
+  if (monorepoPath) {
+    require('module-alias').addAliases(getMonorepoAliases(monorepoPath))
+  }
 
   // Require hook #2
   // Use `esbuild` to allow JSX/TypeScript and modern JS features

@@ -8,7 +8,7 @@ import {type ConfigEnv, type InlineConfig, mergeConfig} from 'vite'
 
 import {createExternalFromImportMap} from './createExternalFromImportMap'
 import {getSanityBrowserAliases} from './getBrowserAliases'
-import {getMonorepoAliases} from './getMonorepoAliases'
+import {getMonorepoAliases, resolveSanityMonorepoPath} from './getMonorepoAliases'
 import {getStudioEnvironmentVariables} from './getStudioEnvironmentVariables'
 import {normalizeBasePath} from './helpers'
 import {sanityBuildEntries} from './vite/plugin-sanity-build-entries'
@@ -74,6 +74,7 @@ export async function getViteConfig(options: ViteOptions): Promise<InlineConfig>
     importMap,
   } = options
 
+  const monorepoPath = await resolveSanityMonorepoPath(cwd)
   const basePath = normalizeBasePath(rawBasePath)
 
   const sanityPkgPath = (await readPkgUp({cwd: __dirname}))?.path
@@ -112,7 +113,9 @@ export async function getViteConfig(options: ViteOptions): Promise<InlineConfig>
     envPrefix: 'SANITY_STUDIO_',
     logLevel: mode === 'production' ? 'silent' : 'info',
     resolve: {
-      alias: (await getMonorepoAliases()) || getSanityBrowserAliases(sanityPkgPath),
+      alias: monorepoPath
+        ? await getMonorepoAliases(monorepoPath)
+        : getSanityBrowserAliases(sanityPkgPath),
       dedupe: ['styled-components'],
     },
     define: {

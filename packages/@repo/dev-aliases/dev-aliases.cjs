@@ -1,8 +1,5 @@
-const path = require('node:path')
+/* eslint-disable tsdoc/syntax */
 
-const PACKAGES_PATH = path.resolve(path.join(__dirname, '..', '..', '..', 'packages'))
-
-console.log('DIRNAME:', __dirname, 'PACKAGES_PATH:', PACKAGES_PATH)
 /**
  * The path mappings/aliases used by various tools in the monorepo to map imported modules to
  * source files in order to speed up rebuilding and avoid having a separate watcher process to build
@@ -12,6 +9,7 @@ console.log('DIRNAME:', __dirname, 'PACKAGES_PATH:', PACKAGES_PATH)
  * - Vite when running the dev server (only when running in this monorepo)
  * - jest when running test suite
  *
+ * @type Record<string, string>
  */
 const devAliases = {
   // NOTE: do not use regex in the module expressions,
@@ -29,25 +27,4 @@ const devAliases = {
   'groq': 'groq/src/_exports.mts',
 }
 
-function getJestAliases() {
-  return Object.fromEntries(
-    Object.entries(devAliases).map(([packageName, aliasPath]) => [
-      packageName,
-      path.join('./packages', aliasPath),
-    ]),
-  )
-}
-
-function getViteAliases() {
-  return Object.fromEntries(
-    Object.entries(devAliases).map(([packageName, aliasPath]) => [
-      packageName,
-      path.resolve(PACKAGES_PATH, aliasPath),
-    ]),
-  )
-}
-
-module.exports = {
-  //getJestAliases,
-  getViteAliases,
-}
+module.exports = devAliases

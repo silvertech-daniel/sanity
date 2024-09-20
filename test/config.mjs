@@ -1,6 +1,6 @@
 /* eslint-disable tsdoc/syntax */
 
-import {getJestAliases} from '@repo/dev-aliases'
+import devAliases from '@repo/dev-aliases'
 
 import path from 'node:path'
 import {escapeRegExp, omit} from 'lodash-es'
@@ -22,9 +22,16 @@ const RE_EXT = /\.[0-9a-z]+$/i
 /** Path to the root of the Sanity monorepo. */
 const ROOT_PATH = path.resolve(dirname, '..')
 
+const jestAliases = Object.fromEntries(
+  Object.entries(devAliases).map(([packageName, aliasPath]) => [
+    packageName,
+    path.join('./packages', aliasPath),
+  ]),
+)
+
 /** The default module name mapper (aka. aliases) for jest tests in the Sanity monorepo. */
 const defaultModuleNameMapper = resolveAliasPaths({
-  ...aliasesToModuleNameWrapper(getJestAliases()),
+  ...aliasesToModuleNameWrapper(jestAliases),
   '.*\\.module\\.css$': './test/mocks/emptyObject',
   '.*\\.css$': './test/mocks/undefined',
 })

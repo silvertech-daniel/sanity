@@ -85,21 +85,24 @@ describe('getAliases', () => {
   })
 
   it('returns the correct aliases for the monorepo', async () => {
+    const monorepoPath = '/path/to/monorepo'
+    //  const monorepoPath = await resolveSanityMonorepoPath(__dirname)
+    //
     const devAliases = {
-      'sanity/_singletons': 'packages/sanity/src/_singletons.ts',
-      'sanity/desk': 'packages/sanity/src/desk.ts',
-      'sanity/presentation': 'packages/sanity/src/presentation.ts',
+      'sanity/_singletons': 'sanity/src/_singletons.ts',
+      'sanity/desk': 'sanity/src/desk.ts',
+      'sanity/presentation': 'sanity/src/presentation.ts',
     }
 
-    jest.doMock('@repo/dev-aliases', () => ({getViteAliases: () => devAliases}), {virtual: true})
+    const expectedAliases = {
+      'sanity/_singletons': '/path/to/monorepo/packages/sanity/src/_singletons.ts',
+      'sanity/desk': '/path/to/monorepo/packages/sanity/src/desk.ts',
+      'sanity/presentation': '/path/to/monorepo/packages/sanity/src/presentation.ts',
+    }
 
-    const aliases = await getMonorepoAliases()
+    jest.doMock('@repo/dev-aliases', () => devAliases, {virtual: true})
 
-    const expectedAliases = Object.fromEntries(
-      Object.entries(devAliases).map(([key, modulePath]) => {
-        return [key, modulePath]
-      }),
-    )
+    const aliases = await getMonorepoAliases(monorepoPath)
 
     expect(aliases).toMatchObject(expectedAliases)
   })

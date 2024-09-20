@@ -1932,6 +1932,9 @@ importers:
 
   perf/studio:
     dependencies:
+      '@repo/dev-aliases':
+        specifier: workspace:*
+        version: link:../../packages/@repo/dev-aliases
       react:
         specifier: ^18.3.1
         version: 18.3.1

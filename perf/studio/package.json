@@ -18,5 +18,8 @@
     "react-dom": "^18.3.1",
     "sanity": "workspace:*",
     "styled-components": "^6.1.0"
+  },
+  "devDependencies": {
+    "@repo/dev-aliases": "workspace:*"
   }
 }

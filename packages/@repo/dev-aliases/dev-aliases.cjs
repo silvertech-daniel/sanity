@@ -2,6 +2,7 @@ const path = require('node:path')
 
 const PACKAGES_PATH = path.resolve(path.join(__dirname, '..', '..', '..', 'packages'))
 
+console.log('DIRNAME:', __dirname, 'PACKAGES_PATH:', PACKAGES_PATH)
 /**
  * The path mappings/aliases used by various tools in the monorepo to map imported modules to
  * source files in order to speed up rebuilding and avoid having a separate watcher process to build
@@ -47,6 +48,6 @@ function getViteAliases() {
 }
 
 module.exports = {
-  getJestAliases,
+  //getJestAliases,
   getViteAliases,
 }

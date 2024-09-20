@@ -1,10 +1,9 @@
+import {getViteAliases} from '@repo/dev-aliases'
 import {configDefaults, defineConfig} from 'vitest/config'
-
-import {getAliases} from '../../../vitest-aliases'
 
 export default defineConfig({
   test: {
-    alias: getAliases(),
+    alias: getViteAliases(),
     typecheck: {
       exclude: [...(configDefaults.typecheck?.exclude || []), '.tmp/**', './lib/**'],
     },

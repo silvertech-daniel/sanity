@@ -1,12 +1,11 @@
 import {createServer, type Server} from 'node:http'
-import path from 'node:path'
 import {Worker} from 'node:worker_threads'
 
 import {afterAll, beforeAll, describe, expect, it, jest} from '@jest/globals'
+import {getViteAliases} from '@repo/dev-aliases'
 import {type SanityDocument, type SanityProject} from '@sanity/client'
 import {evaluate, parse} from 'groq-js'
 
-import {getAliases} from '../../server/aliases'
 import {createReceiver, type WorkerChannelReceiver} from '../../util/workerChannels'
 import {type ValidateDocumentsWorkerData, type ValidationWorkerChannel} from '../validateDocuments'
 
@@ -204,7 +203,7 @@ describe('validateDocuments', () => {
         const moduleAlias = require('module-alias')
         const { register } = require('esbuild-register/dist/node')
 
-        moduleAlias.addAliases(${JSON.stringify(getAliases({monorepo: {path: path.resolve(__dirname, '../../../../../../..')}}))})
+        moduleAlias.addAliases(${JSON.stringify(getViteAliases())})
 
         const { unregister } = register({
           target: 'node18',

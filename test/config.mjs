@@ -1,18 +1,19 @@
 /* eslint-disable tsdoc/syntax */
 
-const path = require('node:path')
-const {escapeRegExp, omit} = require('lodash')
-const devAliases = require('../dev/aliases.cjs')
+import {getJestAliases} from '@repo/dev-aliases'
+
+import path from 'node:path'
+import {escapeRegExp, omit} from 'lodash-es'
 
 /** Regex for matching file extensions. */
 const RE_EXT = /\.[0-9a-z]+$/i
 
 /** Path to the root of the Sanity monorepo. */
-const ROOT_PATH = path.resolve(__dirname, '..')
+const ROOT_PATH = path.resolve(import.meta.dirname, '..')
 
 /** The default module name mapper (aka. aliases) for jest tests in the Sanity monorepo. */
 const defaultModuleNameMapper = resolveAliasPaths({
-  ...aliasesToModuleNameWrapper(devAliases),
+  ...aliasesToModuleNameWrapper(getJestAliases()),
   '.*\\.module\\.css$': './test/mocks/emptyObject',
   '.*\\.css$': './test/mocks/undefined',
 })
@@ -23,7 +24,7 @@ const defaultModuleNameMapper = resolveAliasPaths({
  * @param {import('jest').Config} config - Initial Jest configuration options.
  * @returns {import('jest').Config} The resulting Jest configuration options.
  */
-exports.createJestConfig = function createJestConfig(config = {}) {
+export function createJestConfig(config = {}) {
   const {
     testMatch = [],
     setupFiles = [],
@@ -57,19 +58,19 @@ exports.createJestConfig = function createJestConfig(config = {}) {
       '<rootDir>/coverage/',
       '<rootDir>/lib/',
     ],
-    resolver: path.resolve(__dirname, './resolver.cjs'),
-    testEnvironment: path.resolve(__dirname, './jsdom.jest.env.ts'),
-    setupFiles: [...setupFiles, path.resolve(__dirname, './setup.ts')],
+    resolver: path.resolve(import.meta.dirname, './resolver.cjs'),
+    testEnvironment: path.resolve(import.meta.dirname, './jsdom.jest.env.ts'),
+    setupFiles: [...setupFiles, path.resolve(import.meta.dirname, './setup.ts')],
     // testEnvironment: 'jsdom',
     testEnvironmentOptions: {
       url: 'http://localhost:3333',
     },
     testMatch: [...testMatch, '<rootDir>/**/*.{test,spec}.{js,ts,tsx}'],
-    transformIgnorePatterns: ['/node_modules/(?!(get-random-values-esm)/)'],
+    transformIgnorePatterns: ['/node_modules/(?!(get-random-values-esm|@repo\\/dev-aliases)/)'],
     testPathIgnorePatterns: ['/node_modules/', '/.yalc/'],
     transform: {
       ...transform,
-      '\\.[jt]sx?$': [
+      '\\.m?[jt]sx?$': [
         'babel-jest',
         {
           // Don't look for babel.config.{ts,js,json} files or .babelrc files
@@ -81,18 +82,18 @@ exports.createJestConfig = function createJestConfig(config = {}) {
               '@babel/preset-env',
               {
                 targets: {
-                  node: '14',
-                  chrome: '61',
-                  safari: '11.3',
-                  firefox: '60',
-                  edge: '79',
+                  node: '18',
+                  safari: '16',
+                  chrome: '110',
+                  firefox: '110',
+                  edge: '110',
                 },
               },
             ],
             '@babel/preset-typescript',
             ['@babel/preset-react', {runtime: 'automatic'}],
           ],
-          plugins: ['@babel/plugin-proposal-class-properties'],
+          plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-syntax-import-meta'],
         },
       ],
     },

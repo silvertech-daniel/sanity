@@ -5,7 +5,11 @@ import {escapeRegExp} from 'lodash'
 import resolve from 'resolve.exports'
 import {type Alias} from 'vite'
 
-import {browserCompatibleSanityPackageSpecifiers, getAliases} from '../aliases'
+import {
+  browserCompatibleSanityPackageSpecifiers,
+  getSanityBrowserAliases,
+} from '../getBrowserAliases'
+import {getMonorepoAliases} from '../getMonorepoAliases'
 
 const sanityPkgPath = path.resolve(__dirname, '../../../../../package.json')
 // eslint-disable-next-line import/no-dynamic-require
@@ -56,8 +60,8 @@ describe('getAliases', () => {
   // > This indicates that your JavaScript environment is broken. You cannot use
   // > esbuild in this environment because esbuild relies on this invariant. This
   // > is not a problem with esbuild. You need to fix your environment instead.
-  it('returns the correct aliases for normal builds', () => {
-    const aliases = getAliases({sanityPkgPath})
+  it('returns the correct aliases for normal builds', async () => {
+    const aliases = getSanityBrowserAliases(sanityPkgPath)
 
     // Prepare expected aliases
     const dirname = path.dirname(sanityPkgPath)
@@ -80,31 +84,23 @@ describe('getAliases', () => {
     expect(aliases).toEqual(expectedAliases)
   })
 
-  it('returns the correct aliases for the monorepo', () => {
-    const monorepoPath = path.resolve(__dirname, '../../../../../monorepo')
+  it('returns the correct aliases for the monorepo', async () => {
     const devAliases = {
       'sanity/_singletons': 'packages/sanity/src/_singletons.ts',
       'sanity/desk': 'packages/sanity/src/desk.ts',
       'sanity/presentation': 'packages/sanity/src/presentation.ts',
     }
-    jest.doMock(path.resolve(monorepoPath, 'dev/aliases.cjs'), () => devAliases, {virtual: true})
 
-    const aliases = getAliases({
-      monorepo: {path: monorepoPath},
-    })
+    jest.doMock('@repo/dev-aliases', () => ({getViteAliases: () => devAliases}), {virtual: true})
+
+    const aliases = await getMonorepoAliases()
 
     const expectedAliases = Object.fromEntries(
       Object.entries(devAliases).map(([key, modulePath]) => {
-        return [key, path.resolve(monorepoPath, modulePath)]
+        return [key, modulePath]
       }),
     )
 
     expect(aliases).toMatchObject(expectedAliases)
-  })
-
-  it('returns an empty object if no conditions are met', () => {
-    const aliases = getAliases({})
-
-    expect(aliases).toEqual({})
   })
 })

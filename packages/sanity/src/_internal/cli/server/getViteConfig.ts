@@ -6,11 +6,11 @@ import debug from 'debug'
 import readPkgUp from 'read-pkg-up'
 import {type ConfigEnv, type InlineConfig, mergeConfig} from 'vite'
 
-import {getAliases} from './aliases'
 import {createExternalFromImportMap} from './createExternalFromImportMap'
+import {getSanityBrowserAliases} from './getBrowserAliases'
+import {getMonorepoAliases} from './getMonorepoAliases'
 import {getStudioEnvironmentVariables} from './getStudioEnvironmentVariables'
 import {normalizeBasePath} from './helpers'
-import {loadSanityMonorepo} from './sanityMonorepo'
 import {sanityBuildEntries} from './vite/plugin-sanity-build-entries'
 import {sanityDotWorkaroundPlugin} from './vite/plugin-sanity-dot-workaround'
 import {sanityFaviconsPlugin} from './vite/plugin-sanity-favicons'
@@ -74,7 +74,6 @@ export async function getViteConfig(options: ViteOptions): Promise<InlineConfig>
     importMap,
   } = options
 
-  const monorepo = await loadSanityMonorepo(cwd)
   const basePath = normalizeBasePath(rawBasePath)
 
   const sanityPkgPath = (await readPkgUp({cwd: __dirname}))?.path
@@ -108,12 +107,12 @@ export async function getViteConfig(options: ViteOptions): Promise<InlineConfig>
       sanityFaviconsPlugin({defaultFaviconsPath, customFaviconsPath, staticUrlPath: staticPath}),
       sanityDotWorkaroundPlugin(),
       sanityRuntimeRewritePlugin(),
-      sanityBuildEntries({basePath, cwd, monorepo, importMap}),
+      sanityBuildEntries({basePath, cwd, importMap}),
     ],
     envPrefix: 'SANITY_STUDIO_',
     logLevel: mode === 'production' ? 'silent' : 'info',
     resolve: {
-      alias: getAliases({monorepo, sanityPkgPath}),
+      alias: (await getMonorepoAliases()) || getSanityBrowserAliases(sanityPkgPath),
       dedupe: ['styled-components'],
     },
     define: {

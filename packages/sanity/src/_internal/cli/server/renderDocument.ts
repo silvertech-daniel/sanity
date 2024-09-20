@@ -16,10 +16,9 @@ import {parse as parseHtml} from 'node-html-parser'
 import {createElement} from 'react'
 import {renderToStaticMarkup} from 'react-dom/server'
 
-import {getAliases} from './aliases'
 import {TIMESTAMPED_IMPORTMAP_INJECTOR_SCRIPT} from './constants'
 import {debug as serverDebug} from './debug'
-import {type SanityMonorepo} from './sanityMonorepo'
+import {getMonorepoAliases} from './getMonorepoAliases'
 
 const debug = serverDebug.extend('renderDocument')
 
@@ -44,7 +43,6 @@ interface DocumentProps {
 }
 
 interface RenderDocumentOptions {
-  monorepo?: SanityMonorepo
   studioRootPath: string
   props?: DocumentProps
   importMap?: {
@@ -152,7 +150,7 @@ function renderDocumentFromWorkerData() {
     throw new Error('Must be used as a Worker with a valid options object in worker data')
   }
 
-  const {monorepo, studioRootPath, props, importMap}: RenderDocumentOptions = workerData || {}
+  const {studioRootPath, props, importMap}: RenderDocumentOptions = workerData || {}
 
   if (workerData?.dev) {
     // Define `__DEV__` in the worker thread as well
@@ -173,7 +171,7 @@ function renderDocumentFromWorkerData() {
   // Require hook #1
   // Alias monorepo modules
   debug('Registering potential aliases')
-  require('module-alias').addAliases(getAliases({monorepo}))
+  require('module-alias').addAliases(getMonorepoAliases())
 
   // Require hook #2
   // Use `esbuild` to allow JSX/TypeScript and modern JS features

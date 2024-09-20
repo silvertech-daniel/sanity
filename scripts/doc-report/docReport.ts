@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
-import {groupBy} from 'lodash-es'
+import {groupBy} from 'lodash'
 import prettier from 'prettier'
 import {combineLatest, map} from 'rxjs'
 

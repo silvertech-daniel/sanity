@@ -1,12 +1,10 @@
 import path from 'node:path'
-import {createJestConfig} from '../../test/config.mjs'
-import fs from 'node:fs'
+import {createJestConfig, readPackageName, resolveDirNameFromUrl} from '../../test/config.mjs'
 
-const cliPath = path.resolve(import.meta.dirname, './src/_internal/cli')
+const cliPath = path.resolve(resolveDirNameFromUrl(import.meta.url), './src/_internal/cli')
 
 export default createJestConfig({
-  displayName: JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'package.json'), 'utf-8'))
-    .name,
+  displayName: readPackageName(import.meta.url),
   globalSetup: '<rootDir>/test/setup/global.ts',
   setupFiles: ['<rootDir>/test/setup/environment.ts'],
   setupFilesAfterEnv: ['<rootDir>/test/setup/afterEnv.ts'],

@@ -4,12 +4,23 @@ import {getJestAliases} from '@repo/dev-aliases'
 
 import path from 'node:path'
 import {escapeRegExp, omit} from 'lodash-es'
+import {getDirname} from './importMetaPonyFill.mjs'
+import fs from 'node:fs'
 
+const dirname = getDirname(import.meta.url)
+
+export function resolveDirNameFromUrl(url) {
+  return getDirname(url)
+}
+export function readPackageName(dirNameUrl) {
+  return JSON.parse(fs.readFileSync(path.join(getDirname(dirNameUrl), 'package.json'), 'utf-8'))
+    .name
+}
 /** Regex for matching file extensions. */
 const RE_EXT = /\.[0-9a-z]+$/i
 
 /** Path to the root of the Sanity monorepo. */
-const ROOT_PATH = path.resolve(import.meta.dirname, '..')
+const ROOT_PATH = path.resolve(dirname, '..')
 
 /** The default module name mapper (aka. aliases) for jest tests in the Sanity monorepo. */
 const defaultModuleNameMapper = resolveAliasPaths({
@@ -58,9 +69,9 @@ export function createJestConfig(config = {}) {
       '<rootDir>/coverage/',
       '<rootDir>/lib/',
     ],
-    resolver: path.resolve(import.meta.dirname, './resolver.cjs'),
-    testEnvironment: path.resolve(import.meta.dirname, './jsdom.jest.env.ts'),
-    setupFiles: [...setupFiles, path.resolve(import.meta.dirname, './setup.ts')],
+    resolver: path.resolve(dirname, './resolver.cjs'),
+    testEnvironment: path.resolve(dirname, './jsdom.jest.env.ts'),
+    setupFiles: [...setupFiles, path.resolve(dirname, './setup.ts')],
     // testEnvironment: 'jsdom',
     testEnvironmentOptions: {
       url: 'http://localhost:3333',

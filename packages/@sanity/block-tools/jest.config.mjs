@@ -1,10 +1,9 @@
-import {createJestConfig} from '../../../test/config.mjs'
+import {createJestConfig, readPackageName, resolveDirNameFromUrl} from '../../../test/config.mjs'
 import fs from 'node:fs'
 import path from 'node:path'
 export default createJestConfig({
-  displayName: JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'package.json'), 'utf-8'))
-    .name,
+  displayName: readPackageName(import.meta.url),
   testEnvironment: 'node',
-  rootDir: import.meta.dirname,
+  rootDir: resolveDirNameFromUrl(import.meta.url),
   setupFilesAfterEnv: ['./test/setup.ts'],
 })
